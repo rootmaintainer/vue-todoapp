@@ -2,18 +2,32 @@
   <div class="app">
     <header>
       <h1>TODOアプリ</h1>
+      <div v-if="userStore.isAuthenticated" class="user-info">
+        <span>{{ userStore.user.username }}</span>
+        <button @click="handleLogout" class="logout-btn">ログアウト</button>
+      </div>
     </header>
     <main>
-      <!-- これらのコンポーネントはこれから作成します -->
-      <TodoForm />
-      <TodoList />
+      <LoginForm v-if="!userStore.isAuthenticated" />
+      <template v-else>
+        <TodoForm />
+        <TodoList />
+      </template>
     </main>
   </div>
 </template>
 
 <script setup>
+import { useUserStore } from './stores/user'
 import TodoForm from './components/TodoForm.vue'
 import TodoList from './components/TodoList.vue'
+import LoginForm from './components/LoginForm.vue'
+
+const userStore = useUserStore()
+
+const handleLogout = () => {
+  userStore.logout()
+}
 </script>
 
 <style>
@@ -72,5 +86,25 @@ main {
   background: white;
   border-radius: 8px;
   padding: 20px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.logout-btn {
+  padding: 5px 10px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.logout-btn:hover {
+  background-color: #d32f2f;
 }
 </style>
