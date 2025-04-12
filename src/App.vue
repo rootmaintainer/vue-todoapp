@@ -18,7 +18,8 @@
 </template>
 
 <script setup>
-import { useUserStore } from './stores/user'
+import { ref } from 'vue'
+import { useUserStore } from './stores/user.js'
 import TodoForm from './components/TodoForm.vue'
 import TodoList from './components/TodoList.vue'
 import LoginForm from './components/LoginForm.vue'
